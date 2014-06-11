@@ -1,7 +1,7 @@
 Twoocer
 =======
 
-Twoccer is an experiment to recollect text from Tweeter related with the WorldCup 2014.
+Twoccer is an experiment to recollect text from Twitter related with the WorldCup 2014.
 
 I made this project to learn more about : 
 * Sentiment Analysis
