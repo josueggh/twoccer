@@ -1,4 +1,4 @@
-Twoocer
+Twoccer
 =======
 
 Twoccer is an experiment to recollect text from Twitter related with the WorldCup 2014.
