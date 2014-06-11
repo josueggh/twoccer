@@ -46,7 +46,7 @@ func main(){
   defer session.Close()
   session.SetMode(mgo.Monotonic, true )
 
-  matches :=  session.DB( DATABASE ).C( "matches" )
+  matches :=  session.DB( DATABASE ).C( "matchestest" )
   teams   :=  session.DB( DATABASE ).C( "teams" )
 
   result:= Match{}
@@ -81,7 +81,7 @@ func main(){
     os.Exit(1)
   }
 
-  words := make ([]string,0)
+  words := []string{"gol","gool","goool","gooool","goooool","gooooool","gooooool","gooooool","gooooool","goooooool","gooooooool","goooooooool","winner","loser","#GOL"}
 
   for _ , word := range teamA.Words{
     words = append( words , word )
