@@ -7,11 +7,6 @@ import(
   "regexp"
 )
 
-const(
-  DATABASE  = "twoccer"
-)
-
-
 type Readtweets struct{
   accesstoken     string
   accessecret     string
@@ -31,6 +26,7 @@ type Tweet struct{
   Md    []string  `bson:"media,omitempty"` 
   Ht    []string  `bson:"hashtag,omitempty"` 
   Tx    string  `json:"text"`
+  Ct    string
 }
 
 func New(access_token, access_secret , consumer_key, consumer_secret string) *Readtweets {
@@ -44,7 +40,7 @@ func New(access_token, access_secret , consumer_key, consumer_secret string) *Re
 }
 
 
-func (self *Readtweets) Save( collection , words , limit string ) bool{
+func (self *Readtweets) Save( database, collection , words , limit string ) bool{
 
   session, err := mgo.Dial( "localhost" )
   if err != nil {
@@ -54,7 +50,7 @@ func (self *Readtweets) Save( collection , words , limit string ) bool{
   defer session.Close()
   session.SetMode(mgo.Monotonic, true )
 
-  tweets_collection :=session.DB( DATABASE ).C( collection )
+  tweets_collection :=session.DB( database ).C( collection )
 
   anaconda.SetConsumerKey( self.consumerkey )
   anaconda.SetConsumerSecret( self.consumersecret )
@@ -95,6 +91,7 @@ func (self *Readtweets) Save( collection , words , limit string ) bool{
       media_list,
       hashtag_list,
       tweet.Text,
+      tweet.CreatedAt,
     }
 
     tweets_collection.Insert( t )
