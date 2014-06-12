@@ -65,6 +65,15 @@ func main(){
 
   fmt.Println("Id", result.Id)
 
+  errUp := matches.Update( 
+    bson.M{ "_id" : result.Id } ,
+    bson.M{ "$set" : bson.M {"status" : "started" } },
+  )
+
+  if errUp != nil{
+    os.Exit(1)
+  }
+
   match := result.TeamA+result.TeamB
   
   errTA := teams.Find(
@@ -81,7 +90,7 @@ func main(){
     os.Exit(1)
   }
 
-  words := []string{"gol","gool","goool","gooool","goooool","gooooool","gooooool","gooooool","gooooool","goooooool","gooooooool","goooooooool","winner","loser","#GOL"}
+  words := []string{"#WorldCup","gol","gool","goool","gooool","goooool","gooooool","gooooool","gooooool","gooooool","goooooool","gooooooool","goooooooool","winner","loser","#GOL"}
 
   for _ , word := range teamA.Words{
     words = append( words , word )
@@ -109,6 +118,18 @@ func main(){
   time.Sleep(time.Minute * MINUTES)
   
   ticker.Stop()
+  
+  errFin := matches.Update( 
+    bson.M{ "_id" : result.Id } ,
+    bson.M{ "$set" : bson.M {"status" : "finished" } },
+  )
+
+  if errFin != nil{
+    os.Exit(1)
+  }
+
+
   fmt.Println("Match finished")
+  os.Exit(0)
 
 }
